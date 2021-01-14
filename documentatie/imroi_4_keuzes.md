@@ -1,5 +1,5 @@
 # IMROI 4.0.0.
-## samengevoegd datamodel (verstrekt op 20-10-2020)
+**samengevoegd datamodel**
 
 ## Doel document
 
