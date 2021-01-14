@@ -46,7 +46,7 @@ Dit is ook in de lijn hoe bijvoorbeeld een basisregistratie zoals adressen en ge
 Als er behoefte is aan één symbool dan kan de afnemende applicatie (QGIS,COGO,WGP, ArcGIS) een cluster point visualisatie doen.
 
 Wil men alleen één schadecirkel zien van het cluster? Dan kan de view aangepast worden door de grootste straal te pakken als visualisatie. Bijvoorbeeld:
-
+```
 With gevaarlijke\_stof as (
 
 SELECT gvs.id,
@@ -92,7 +92,7 @@ JOIN objecten.gevaarlijkestof\_schade\_cirkel gsc ON gvs.id = gsc.gevaarlijkesto
 LEFT JOIN objecten.gevaarlijkestof\_vnnr vnnr ON gvs.gevaarlijkestof\_vnnr\_id = vnnr.id)
 
 Select max(area), geom from gevaarlijke\_stof group by object\_id;
-
+```
 **Aanpassing werkwijze**
 
 Per gevaarlijke stof accepteren dat er een locatie aan hangt, er kan dan in de visualisatie een groep gemaakt worden op basis van de locatie. Zowel QGIS als COGO en andere applicaties kan een symbool clusteren.
@@ -165,7 +165,7 @@ In de tabel objecten.bouwlagen worden de pand/bouwlaag contouren altijd opgeslag
 Tabel objecten.terrein krijgt een extra RULE richting **objecten.object** dit omdat de view(s) (voor voertuigen) dan gebruik kan maken van deze geometrie en geen left join + group by nodig heeft.
 
 **RULE toevoegen:**
-
+```
 CREATE OR REPLACE RULE object\_terrein\_upd AS
 
 ON UPDATE TO objecten.terrein
@@ -231,9 +231,9 @@ GROUP BY o.formelenaam, o.id) part ON st\_intersects(bl.geom, part.geovlak);
 ALTER TABLE objecten.view\_bouwlagen
 
 OWNER TO oiv\_admin;
-
+```
 **Nieuwe situatie view:**
-
+```
 SELECT bl.id,
 
 bl.geom,
@@ -261,7 +261,7 @@ WHERE o.status::text = &#39;in gebruik&#39;::text AND
 o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL
 
 AND o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL;
-
+```
 1. **Historietabel**
 
 **Verschillen**
@@ -308,18 +308,18 @@ Als laatste extra veld:
 
 Plus\_info (json)
 
-De rede van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix\_code, teamlid etc. Maar om SafetyCT wat tegemoet te komen om niet al te veel om te stekkeren de velden bewaard.
+De reden van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix\_code, teamlid etc. Maar om SafetyCT wat tegemoet te komen om niet al te veel om te stekkeren de velden bewaard.
 
 Dit veld kan gebruikt worden voor bijvoorbeeld: privacy achtige zaken als: een toegangscode tot een repressief object, i.p.v. enkel de formelenaam een contactgegeven of welke informatie dan ook.
 
 Dat ziet er dan bijvoorbeeld zo uit:
-
+```
 (&#39;{ &quot;contactpersoon&quot;: &quot;John Doe&quot;, &quot;speciale toegang&quot;: {&quot;object&quot;: &quot;sleutelbuis&quot;,&quot;locatie&quot;: &#39;aan de linker kant van de voordeur&#39;}}&#39;);
-
+```
 Wat levert deze aanpassing op? Minder complex model, om weer terug te komen op de view voor voertuigen:
 
 **Huidige view:**
-
+```
 CREATE OR REPLACE VIEW objecten.view\_bouwlagen
 
 AS
@@ -369,9 +369,9 @@ GROUP BY o.formelenaam, o.id) part ON st\_intersects(bl.geom, part.geovlak);
 ALTER TABLE objecten.view\_bouwlagen
 
 OWNER TO oiv\_admin;
-
+```
 **Nieuwe view:**
-
+```
 CREATE OR REPLACE VIEW objecten.view\_bouwlagen
 
 AS
@@ -399,7 +399,7 @@ FROM objecten.bouwlagen bl
 JOIN objecten.object o on bl.object\_id = o.id
 
 WHERE object.status::text = &#39;in gebruik&#39;::text AND o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL) AND (o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL;
-
+```
 Een repressief object heeft maar 1 actuele status, zolang datum\_geldig\_tot leeg is, is dit het juiste repressieve object.
 
 Een terrein hoeft niet meer gerelateerd te worden aan het repressieve object of de historietabel omdat die al reeds (als die bestaat!) opgeslagen zit in objecten.object. Als een terrein niet bestaat dan is het pand het repressieve object in objecten.object.
@@ -416,7 +416,7 @@ Naast de aanpassing van het datamodel is het echt zaak dat er geen wijzigingen k
 
 Het is erg veel uitzoekwerk wat de wijzigingen zijn en het is niet duidelijk welke versie werkt met de QGIS plug-in. Support/samenwerken landelijk is op deze manier vrijwel onmogelijk. Het beoordelen van versie 3.0.4. is bijvoorbeeld ook niet mogelijk omdat die niet op Github staat en enkel gemaild is.
 
-Een paar uitgangspunten:
+**Een paar uitgangspunten:**
 
 1. **Het samengevoegde datamodel omarmen** , dit kost zowel Baas Geo-informatie als SafetyCT werk.
   1. De aanpassingen levert de werkgroep aan, men krijgt een kant en klaar leeg datamodel met een overzicht waarin de wijzingen zitten.
@@ -437,11 +437,10 @@ Een paar uitgangspunten:
   1. Aanpassing repressief object voor terreinen / bouwlagen(panden)
   2. Eenduidige werkwijze en opslag voor gevaarlijke stoffen
   3. Een aanpassing aan opslag status (historietabel)
-  4. TYPES worden vervangen met \*\_type tabellen
+  4. TYPES worden vervangen met ```\*\_type``` tabellen
   5. SERIALS worden met IDENTITY columns vervangen
   6. Performance gaat enorm omhoog voor views en specifiek voor voertuig views.
 2. Het opzetten van een Github:
   1. Is onder beheer van de gebruikersgroep OIV IMROI
   2. Ontwikkelaars kunnen de versie niet afdwingen / doorvoeren zonder akkoord werkgroep.
 
-_IMROI samengevoegd datamodel versiedatum 15-10-2020 Pagina_ _ **16** _ _van_ _ **16** _
