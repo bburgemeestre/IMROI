@@ -7,7 +7,7 @@
 
 Er zijn meerdere sessies geweest om keuzes te maken in de verschillen in registraties gebaseerd op het IMROI. Vanuit IMROI zijn er twee datamodel versies, de versies zouden samen moeten komen zodat de diverse regios hetzelfde datamodel kunnen gebruiken. Het grote voordeel is dat de Veiligheidsregio dan kan kiezen welke applicatie in te zetten voor OIV. Dit kan COGO en/of QGIS of iets heel anders zijn. De huidige modellen zijn niet compatibel.
 
-Naast dat er twee modellen zijn, zijn er veel verschillende versies. Zo is op het moment van schrijven een veelvoud aan versies actief tussen (2.x.x.) 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregios.
+Naast dat er twee modellen zijn, zijn er verschillende versies. Deze versies variëren tussen (2.x.x.), 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregios.
 
 ## Gevaarlijke stoffen
 
@@ -23,7 +23,7 @@ Bij de een is er één punt (opslag) met meerdere (administratieve) gevaarlijke 
 
 ![Image of gevaarlijkestof](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/gevaarlijkestof.png)
 
-**Datamodel Veiligheidsregio's QGIS**
+**Datamodel Veiligheidsregios QGIS**
 
 Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**.
 
@@ -31,13 +31,13 @@ Stap 2: er wordt een gevaarlijke stof (administratief) **objecten.gevaarlijkesto
 
 Stap 3: als er een schade_cirkel is dan kijkt deze naar **objecten.gevaarlijkestof_opslag** en genereerd een schadecirkel in **objecten.gevaarlijkestof_schade_cirkel**
 
-**Datamodel Veiligheidsregio's COGO**
+**Datamodel Veiligheidsregios COGO**
 
 Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**. Hieraan zit **object.gevaarlijkestof** gejoind.
 
 Stap 2: de schade_cirkel kijkt naar **object.gevaarlijkestof** en geeft dus meerdere cirkels als er meerdere stoffen met een straal aanwezig zijn. Dit komt omdat elke gevaarlijke stof een locatie heeft.
 
-**Aanbeveling**
+### Aanbeveling
 
 Om het simpel te houden voor de gebruiker is het makkelijk om per stof een punt te prikken in de kaart, je kan altijd als er een wijziging komt één van de punten verwijderen of verplaatsen. Dit maakt het net als de overige objecten zoals pictogrammen wat meer eenduidig in de werkwijze. De mogelijkheid is er ook om &quot;nauwkeurig&quot; in een pand de opslag per stof in de ruimte weer te geven als hier behoefte aan is.
 
@@ -109,11 +109,11 @@ Voor de gebruiker is het simpel en efficiënt want je kiest een symbool en klikt
 - Een object (ingang, sleutelbuis, afsluiter) hoort altijd bij een bouwlaag (als die er is) en krijgt dit kenmerk mee
 - Een bouwlaag wat op een terrein ligt krijgt het kenmerk van het repressieve object mee, het repressieve object is in dit geval het terrein.
 
-**Veiligheidsregio's QGIS**
+**Veiligheidsregios QGIS**
 
 Het repressieve object is bij QGIS altijd een terrein. Als een pand wordt ingetekend dan wordt er altijd om het pand een terrein getekend als eerste stap.
 
-**Veiligheidsregio's COGO**
+**Veiligheidsregios COGO**
 
 Bij COGO wordt het pand (lees bouwlaag) als repressief object gebruikt en soms een terrein ingetekend.
 
@@ -126,7 +126,7 @@ Nu blijkt niet elke regio de voorkeur te hebben om altijd een terrein te moeten 
 | ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_3.png) | Nee | Ja, teken | Geovlak terrein | | X, y |
 | ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_4.png) | Ja, meerdere | Ja, teken | Geovlak terrein | X, y , x, y …. | X, y |
 
-**Aanbeveling**
+### Aanbeveling
 
 **Om samen te komen kan het volgende ingericht worden:**
 
@@ -156,7 +156,7 @@ In de tabel objecten.bouwlagen worden de pand/bouwlaag contouren altijd opgeslag
 3. Aanpassing in objecten.object, hierin komt:
   1. Geovlak
 
-**Aanpassing terrein uitgewerkt**
+### Aanpassing terrein uitgewerkt
 
 **Tabel aanpassing objecten.terrein**
 
@@ -264,15 +264,15 @@ AND o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL;
 
 **Verschillen**
 
-**Veiligheidsregio's QGIS**
+**Veiligheidsregios QGIS**
 
 Maakt gebruik van objecten.historie en matrixcode. Naast QGIS maakt ook voertuig (views) gebruik van het status veld in objecten.historie. Is een repressief object in concept dan wordt die niet weergegeven bijvoorbeeld.
 
-**Veiligheidsregio's COGO**
+**Veiligheidsregios COGO**
 
 COGO anders opgelost: regio tabel toegevoegd. Historietabel wordt niet gebruikt. COGO gebruikt objecten_plus voor status.
 
-**Aanbeveling**
+### Aanbeveling
 
 Historietabel impact is groot vanuit QGIS altijd eerst concept en dan richting in gebruik. Omdat we een nieuwe start willen maken is het toch aan te bevelen deze aan te passen.
 
@@ -406,7 +406,7 @@ Een ruimtelijke selectie tussen bouwlaag en terrein+object is niet meer nodig om
 
 ## Uitvoering samenvoegen datamodellen tot LTR
 
-**Voorstel aan OIV IMROI werkgroep**
+### Voorstel aan OIV IMROI werkgroep
 
 Ons voorstel is naast de aanpassingen die komen ook vanuit de OIV IMROI groep een hard besluit te nemen om een Long Term Release uit te rollen.
 
