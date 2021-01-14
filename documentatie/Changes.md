@@ -1,6 +1,6 @@
 # IMROI 4.0.0. LTR datamodel implementatie 
 1e concept opzet verstrekt op 20-10-2020
-2e definitief verstrekt op ...
+2e definitief verstrekt op 14-1-2020
 
 ## Inleiding
 
