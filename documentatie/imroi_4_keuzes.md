@@ -21,7 +21,7 @@ Bij de een is er één punt (opslag) met meerdere (administratieve) gevaarlijke 
 
 **Visueel**
 
-![Image of gevaarlijkestof](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/gevaarlijkestof.png)
+![Image of gevaarlijkestof](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/gevaarlijkestof.png)
 
 **Datamodel Veiligheidsregio's QGIS**
 
@@ -121,10 +121,10 @@ Nu blijkt niet elke regio de voorkeur te hebben om altijd een terrein te moeten 
 
 | **Scenario** | Pand (lees bouwlaag) | Terrein | Repressief objectObjecten.object | Geometrie pand in objecten.bouwlagen | Geometrie terrein in objecten.terreinen |
 | --- | --- | --- | --- | --- | --- |
-| ![](RackMultipart20201021-4-gki9kz_html_ce4f662b29c8ad4a.png) | Ja | Ja, genereer (trigger) | Geovlak terrein | X, y | X, y |
-| ![](RackMultipart20201021-4-gki9kz_html_f2d73f78a68d5efd.png) | Ja | Nee | Geovlak pand | X, y | |
-| ![](RackMultipart20201021-4-gki9kz_html_db8a0c7d564ce5b7.png) | Nee | Ja, teken | Geovlak terrein | | X, y |
-| ![](RackMultipart20201021-4-gki9kz_html_bad71fcc56877ffa.png) | Ja, meerdere | Ja, teken | Geovlak terrein | X, y , x, y …. | X, y |
+| ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_1.png) | Ja | Ja, genereer (trigger) | Geovlak terrein | X, y | X, y |
+| ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_2.png) | Ja | Nee | Geovlak pand | X, y | |
+| ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_3.png) | Nee | Ja, teken | Geovlak terrein | | X, y |
+| ![Image of scenario_1](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/scenario_4.png) | Ja, meerdere | Ja, teken | Geovlak terrein | X, y , x, y …. | X, y |
 
 **Aanbeveling**
 
