@@ -7,7 +7,7 @@
 
 Er zijn meerdere sessies geweest om keuzes te maken in de verschillen in registraties gebaseerd op het IMROI. Vanuit IMROI zijn er twee datamodel versies, de versies zouden samen moeten komen zodat de diverse regios hetzelfde datamodel kunnen gebruiken. Het grote voordeel is dat de Veiligheidsregio dan kan kiezen welke applicatie in te zetten voor OIV. Dit kan COGO en/of QGIS of iets heel anders zijn. De huidige modellen zijn niet compatibel.
 
-Naast dat er twee modellen zijn, zijn er verschillende versies. Deze versies variëren tussen (2.x.x.), 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregios.
+Naast dat er twee modellen zijn, zijn er verschillende versies. Deze versies variëren tussen (2.x.x.), 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregio's.
 
 ## Gevaarlijke stoffen
 
@@ -23,7 +23,7 @@ Bij de een is er één punt (opslag) met meerdere (administratieve) gevaarlijke 
 
 ![Image of gevaarlijkestof](https://github.com/bburgemeestre/OIV-IMROI/blob/main/documentatie/images/gevaarlijkestof.png)
 
-**Datamodel Veiligheidsregios QGIS**
+**Datamodel Veiligheidsregio's QGIS**
 
 Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**.
 
@@ -31,7 +31,7 @@ Stap 2: er wordt een gevaarlijke stof (administratief) **objecten.gevaarlijkesto
 
 Stap 3: als er een schade_cirkel is dan kijkt deze naar **objecten.gevaarlijkestof_opslag** en genereerd een schadecirkel in **objecten.gevaarlijkestof_schade_cirkel**
 
-**Datamodel Veiligheidsregios COGO**
+**Datamodel Veiligheidsregio's COGO**
 
 Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**. Hieraan zit **object.gevaarlijkestof** gejoind.
 
@@ -109,11 +109,11 @@ Voor de gebruiker is het simpel en efficiënt want je kiest een symbool en klikt
 - Een object (ingang, sleutelbuis, afsluiter) hoort altijd bij een bouwlaag (als die er is) en krijgt dit kenmerk mee
 - Een bouwlaag wat op een terrein ligt krijgt het kenmerk van het repressieve object mee, het repressieve object is in dit geval het terrein.
 
-**Veiligheidsregios QGIS**
+**Veiligheidsregio's QGIS**
 
 Het repressieve object is bij QGIS altijd een terrein. Als een pand wordt ingetekend dan wordt er altijd om het pand een terrein getekend als eerste stap.
 
-**Veiligheidsregios COGO**
+**Veiligheidsregio's COGO**
 
 Bij COGO wordt het pand (lees bouwlaag) als repressief object gebruikt en soms een terrein ingetekend.
 
@@ -264,11 +264,11 @@ AND o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL;
 
 **Verschillen**
 
-**Veiligheidsregios QGIS**
+**Veiligheidsregio's QGIS**
 
 Maakt gebruik van objecten.historie en matrixcode. Naast QGIS maakt ook voertuig (views) gebruik van het status veld in objecten.historie. Is een repressief object in concept dan wordt die niet weergegeven bijvoorbeeld.
 
-**Veiligheidsregios COGO**
+**Veiligheidsregio's COGO**
 
 COGO anders opgelost: regio tabel toegevoegd. Historietabel wordt niet gebruikt. COGO gebruikt objecten_plus voor status.
 
