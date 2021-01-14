@@ -5,9 +5,9 @@
 
 **Inleiding**
 
-Er zijn meerdere sessies geweest om keuzes te maken in de verschillen in registraties gebaseerd op het IMROI. Vanuit IMROI zijn er twee datamodel versies, de versies zouden samen moeten komen zodat de diverse regio&#39;s hetzelfde datamodel kunnen gebruiken. Het grote voordeel is dat de Veiligheidsregio dan kan kiezen welke applicatie in te zetten voor OIV. Dit kan COGO en/of QGIS of iets heel anders zijn. De huidige modellen zijn niet compatibel.
+Er zijn meerdere sessies geweest om keuzes te maken in de verschillen in registraties gebaseerd op het IMROI. Vanuit IMROI zijn er twee datamodel versies, de versies zouden samen moeten komen zodat de diverse regios hetzelfde datamodel kunnen gebruiken. Het grote voordeel is dat de Veiligheidsregio dan kan kiezen welke applicatie in te zetten voor OIV. Dit kan COGO en/of QGIS of iets heel anders zijn. De huidige modellen zijn niet compatibel.
 
-Naast dat er twee modellen zijn, zijn er veel verschillende versies. Zo is op het moment van schrijven een veelvoud aan versies actief tussen (2.x.x.) 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregio&#39;s.
+Naast dat er twee modellen zijn, zijn er veel verschillende versies. Zo is op het moment van schrijven een veelvoud aan versies actief tussen (2.x.x.) 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregios.
 
 ## Gevaarlijke stoffen
 
@@ -25,17 +25,17 @@ Bij de een is er één punt (opslag) met meerdere (administratieve) gevaarlijke 
 
 **Datamodel Veiligheidsregio's QGIS**
 
-Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof\_opslag**.
+Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**.
 
-Stap 2: er wordt een gevaarlijke stof (administratief) **objecten.gevaarlijkestof** aan een **object.gevaarlijkestof\_opslag** gehangen.
+Stap 2: er wordt een gevaarlijke stof (administratief) **objecten.gevaarlijkestof** aan een **object.gevaarlijkestof_opslag** gehangen.
 
-Stap 3: als er een schade\_cirkel is dan kijkt deze naar **objecten.gevaarlijkestof\_opslag** en genereerd een schadecirkel in **objecten.gevaarlijkestof\_schade\_cirkel**
+Stap 3: als er een schade_cirkel is dan kijkt deze naar **objecten.gevaarlijkestof_opslag** en genereerd een schadecirkel in **objecten.gevaarlijkestof_schade_cirkel**
 
 **Datamodel Veiligheidsregio's COGO**
 
-Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof\_opslag**. Hieraan zit **object.gevaarlijkestof** gejoind.
+Stap 1: er wordt een opslag locatie ingetekend (punt) **objecten.gevaarlijkestof_opslag**. Hieraan zit **object.gevaarlijkestof** gejoind.
 
-Stap 2: de schade\_cirkel kijkt naar **object.gevaarlijkestof** en geeft dus meerdere cirkels als er meerdere stoffen met een straal aanwezig zijn. Dit komt omdat elke gevaarlijke stof een locatie heeft.
+Stap 2: de schade_cirkel kijkt naar **object.gevaarlijkestof** en geeft dus meerdere cirkels als er meerdere stoffen met een straal aanwezig zijn. Dit komt omdat elke gevaarlijke stof een locatie heeft.
 
 **Aanbeveling**
 
@@ -47,19 +47,19 @@ Als er behoefte is aan één symbool dan kan de afnemende applicatie (QGIS,COGO,
 
 Wil men alleen één schadecirkel zien van het cluster? Dan kan de view aangepast worden door de grootste straal te pakken als visualisatie. Bijvoorbeeld:
 ```
-With gevaarlijke\_stof as (
+With gevaarlijke_stof as (
 
 SELECT gvs.id,
 
-gvs.opslag\_id,
+gvs.opslag_id,
 
 gvs.omschrijving,
 
-vnnr.vn\_nr,
+vnnr.vn_nr,
 
-vnnr.gevi\_nr,
+vnnr.gevi_nr,
 
-vnnr.eric\_kaart,
+vnnr.eric_kaart,
 
 gvs.hoeveelheid,
 
@@ -67,7 +67,7 @@ gvs.eenheid,
 
 gvs.toestand,
 
-o.object\_id,
+o.object_id,
 
 o.formelenaam,
 
@@ -75,23 +75,23 @@ ops.bouwlaag,
 
 ops.bouwdeel,
 
-st\_buffer(ops.geom, gsc.straal::double precision)::geometry(Polygon,28992) AS geom,
+st_buffer(ops.geom, gsc.straal::double precision)::geometry(Polygon,28992) AS geom,
 
-st\_area(st\_buffer(ops.geom, gsc.straal::double precision)::geometry(Polygon,28992)) AS area,
+st_area(st_buffer(ops.geom, gsc.straal::double precision)::geometry(Polygon,28992)) AS area,
 
 ops.locatie,
 
-round(st\_x(ops.geom)) AS x,
+round(st_x(ops.geom)) AS x,
 
-round(st\_y(ops.geom)) AS y
+round(st_y(ops.geom)) AS y
 
 FROM objecten.gevaarlijkestof gvs
 
-JOIN objecten.gevaarlijkestof\_schade\_cirkel gsc ON gvs.id = gsc.gevaarlijkestof\_id
+JOIN objecten.gevaarlijkestof_schade_cirkel gsc ON gvs.id = gsc.gevaarlijkestof_id
 
-LEFT JOIN objecten.gevaarlijkestof\_vnnr vnnr ON gvs.gevaarlijkestof\_vnnr\_id = vnnr.id)
+LEFT JOIN objecten.gevaarlijkestof_vnnr vnnr ON gvs.gevaarlijkestof_vnnr_id = vnnr.id)
 
-Select max(area), geom from gevaarlijke\_stof group by object\_id;
+Select max(area), geom from gevaarlijke_stof group by object_id;
 ```
 **Aanpassing werkwijze**
 
@@ -146,8 +146,8 @@ In de tabel objecten.bouwlagen worden de pand/bouwlaag contouren altijd opgeslag
 
 **Aanpassingen terreinen beknopt**
 
-1. trigger toevoegen aan tabel objecten.terreinen --\&gt; objecten.object (geovlak)
-2. Views voor voertuigen kunnen aangepast worden. Bv: objecten.view\_bouwlagen
+1. trigger toevoegen aan tabel objecten.terreinen -- objecten.object (geovlak)
+2. Views voor voertuigen kunnen aangepast worden. Bv: objecten.view_bouwlagen
   1. Select distinct + union op object verdwijnt
   2. Left join met objecten terrein en historie verdwijnt
   3. Ruimtelijke selectie verdwijnt
@@ -164,7 +164,7 @@ Tabel objecten.terrein krijgt een extra RULE richting **objecten.object** dit om
 
 **RULE toevoegen:**
 ```
-CREATE OR REPLACE RULE object\_terrein\_upd AS
+CREATE OR REPLACE RULE object_terrein_upd AS
 
 ON UPDATE TO objecten.terrein
 
@@ -180,7 +180,7 @@ WHERE (object.id = new.id));
 
 **Geel verdwijnt**
 
-CREATE OR REPLACE VIEW objecten.view\_bouwlagen
+CREATE OR REPLACE VIEW objecten.view_bouwlagen
 
 AS
 
@@ -188,15 +188,15 @@ SELECT bl.id,
 
 bl.geom,
 
-bl.datum\_aangemaakt,
+bl.datum_aangemaakt,
 
-bl.datum\_gewijzigd,
+bl.datum_gewijzigd,
 
 bl.bouwlaag,
 
 bl.bouwdeel,
 
-part.object\_id,
+part.object_id,
 
 part.formelenaam
 
@@ -204,31 +204,31 @@ FROM objecten.bouwlagen bl
 
 JOIN ( SELECT DISTINCT o.formelenaam,
 
-o.id AS object\_id,
+o.id AS object_id,
 
-st\_union(t.geom)::geometry(MultiPolygon,28992) AS geovlak
+st_union(t.geom)::geometry(MultiPolygon,28992) AS geovlak
 
 FROM objecten.object o
 
-LEFT JOIN objecten.historie ON historie.id = (( SELECT historie\_1.id
+LEFT JOIN objecten.historie ON historie.id = (( SELECT historie_1.id
 
-FROM objecten.historie historie\_1
+FROM objecten.historie historie_1
 
-WHERE historie\_1.object\_id = o.id
+WHERE historie_1.object_id = o.id
 
-ORDER BY historie\_1.datum\_aangemaakt DESC
+ORDER BY historie_1.datum_aangemaakt DESC
 
 LIMIT 1))
 
-LEFT JOIN objecten.terrein t ON o.id = t.object\_id
+LEFT JOIN objecten.terrein t ON o.id = t.object_id
 
-WHERE historie.status::text = &#39;in gebruik&#39;::text AND (o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL) AND (o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL)
+WHERE historie.status::text = in gebruik::text AND (o.datum_geldig_vanaf \&lt;= now() OR o.datum_geldig_vanaf IS NULL) AND (o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL)
 
-GROUP BY o.formelenaam, o.id) part ON st\_intersects(bl.geom, part.geovlak);
+GROUP BY o.formelenaam, o.id) part ON st_intersects(bl.geom, part.geovlak);
 
-ALTER TABLE objecten.view\_bouwlagen
+ALTER TABLE objecten.view_bouwlagen
 
-OWNER TO oiv\_admin;
+OWNER TO oiv_admin;
 ```
 **Nieuwe situatie view:**
 ```
@@ -236,15 +236,15 @@ SELECT bl.id,
 
 bl.geom,
 
-bl.datum\_aangemaakt,
+bl.datum_aangemaakt,
 
-bl.datum\_gewijzigd,
+bl.datum_gewijzigd,
 
 bl.bouwlaag,
 
 bl.bouwdeel,
 
-o.id object\_id,
+o.id object_id,
 
 o.formelenaam,
 
@@ -254,11 +254,11 @@ FROM objecten.bouwlagen bl
 
 JOIN objecten.object o on bl.id = o.id
 
-WHERE o.status::text = &#39;in gebruik&#39;::text AND
+WHERE o.status::text = in gebruik::text AND
 
-o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL
+o.datum_geldig_vanaf \&lt;= now() OR o.datum_geldig_vanaf IS NULL
 
-AND o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL;
+AND o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL;
 ```
 ## Historietabel
 
@@ -270,11 +270,11 @@ Maakt gebruik van objecten.historie en matrixcode. Naast QGIS maakt ook voertuig
 
 **Veiligheidsregio's COGO**
 
-COGO anders opgelost: regio tabel toegevoegd. Historietabel wordt niet gebruikt. COGO gebruikt objecten\_plus voor status.
+COGO anders opgelost: regio tabel toegevoegd. Historietabel wordt niet gebruikt. COGO gebruikt objecten_plus voor status.
 
 **Aanbeveling**
 
-Historietabel impact is groot vanuit QGIS altijd eerst concept en dan richting &#39;in gebruik&#39;. Omdat we een nieuwe start willen maken is het toch aan te bevelen deze aan te passen.
+Historietabel impact is groot vanuit QGIS altijd eerst concept en dan richting in gebruik. Omdat we een nieuwe start willen maken is het toch aan te bevelen deze aan te passen.
 
 Het doel is dit simpel en efficiënt in te richten wat de performance ten goede komt. Ook is de naamgeving &quot;historie&quot; verwarrend als er wel daadwerkelijk historie opbouw plaats gaat vinden.
 
@@ -288,15 +288,15 @@ De tabel object krijg de volgende extra velden:
 
 Uit historietabel:
 
-Teamlid\_behandeld\_id
+Teamlid_behandeld_id
 
-Teamlid\_afgehandeld\_id
+Teamlid_afgehandeld_id
 
-Status --\&gt; status\_type (concept, in gebruik, archief)
+Status -- status_type (concept, in gebruik, archief)
 
-Aanpassing --\&gt; aanpassing\_type (aanpassing, nieuw, update)
+Aanpassing -- aanpassing_type (aanpassing, nieuw, update)
 
-Matrix\_code --\&gt; matrix\_code ():
+Matrix_code -- matrix_code ():
 
 998 &quot;998&quot; &quot;Waterongevallen&quot; &quot;X&quot; 998
 
@@ -304,21 +304,21 @@ Matrix\_code --\&gt; matrix\_code ():
 
 Als laatste extra veld:
 
-Plus\_info (json)
+Plus_info (json)
 
-De reden van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix\_code, teamlid etc. 
+De reden van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix_code, teamlid etc. 
 
 Dit veld kan gebruikt worden voor bijvoorbeeld: privacy achtige zaken als: een toegangscode tot een repressief object, i.p.v. enkel de formelenaam een contactgegeven of welke informatie dan ook.
 
 Dat ziet er dan bijvoorbeeld zo uit:
 ```
-(&#39;{ &quot;contactpersoon&quot;: &quot;John Doe&quot;, &quot;speciale toegang&quot;: {&quot;object&quot;: &quot;sleutelbuis&quot;,&quot;locatie&quot;: &#39;aan de linker kant van de voordeur&#39;}}&#39;);
+({ &quot;contactpersoon&quot;: &quot;John Doe&quot;, &quot;speciale toegang&quot;: {&quot;object&quot;: &quot;sleutelbuis&quot;,&quot;locatie&quot;: aan de linker kant van de voordeur}});
 ```
 Wat levert deze aanpassing op? Minder complex model, om weer terug te komen op de view voor voertuigen:
 
 **Huidige view:**
 ```
-CREATE OR REPLACE VIEW objecten.view\_bouwlagen
+CREATE OR REPLACE VIEW objecten.view_bouwlagen
 
 AS
 
@@ -326,15 +326,15 @@ SELECT bl.id,
 
 bl.geom,
 
-bl.datum\_aangemaakt,
+bl.datum_aangemaakt,
 
-bl.datum\_gewijzigd,
+bl.datum_gewijzigd,
 
 bl.bouwlaag,
 
 bl.bouwdeel,
 
-part.object\_id,
+part.object_id,
 
 part.formelenaam
 
@@ -342,35 +342,35 @@ FROM objecten.bouwlagen bl
 
 JOIN ( SELECT DISTINCT o.formelenaam,
 
-o.id AS object\_id,
+o.id AS object_id,
 
-st\_union(t.geom)::geometry(MultiPolygon,28992) AS geovlak
+st_union(t.geom)::geometry(MultiPolygon,28992) AS geovlak
 
 FROM objecten.object o
 
-LEFT JOIN objecten.historie ON historie.id = (( SELECT historie\_1.id
+LEFT JOIN objecten.historie ON historie.id = (( SELECT historie_1.id
 
-FROM objecten.historie historie\_1
+FROM objecten.historie historie_1
 
-WHERE historie\_1.object\_id = o.id
+WHERE historie_1.object_id = o.id
 
-ORDER BY historie\_1.datum\_aangemaakt DESC
+ORDER BY historie_1.datum_aangemaakt DESC
 
 LIMIT 1))
 
-LEFT JOIN objecten.terrein t ON o.id = t.object\_id
+LEFT JOIN objecten.terrein t ON o.id = t.object_id
 
-WHERE historie.status::text = &#39;in gebruik&#39;::text AND (o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL) AND (o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL)
+WHERE historie.status::text = in gebruik::text AND (o.datum_geldig_vanaf \&lt;= now() OR o.datum_geldig_vanaf IS NULL) AND (o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL)
 
-GROUP BY o.formelenaam, o.id) part ON st\_intersects(bl.geom, part.geovlak);
+GROUP BY o.formelenaam, o.id) part ON st_intersects(bl.geom, part.geovlak);
 
-ALTER TABLE objecten.view\_bouwlagen
+ALTER TABLE objecten.view_bouwlagen
 
-OWNER TO oiv\_admin;
+OWNER TO oiv_admin;
 ```
 **Nieuwe view:**
 ```
-CREATE OR REPLACE VIEW objecten.view\_bouwlagen
+CREATE OR REPLACE VIEW objecten.view_bouwlagen
 
 AS
 
@@ -378,15 +378,15 @@ SELECT bl.id,
 
 bl.geom,
 
-bl.datum\_aangemaakt,
+bl.datum_aangemaakt,
 
-bl.datum\_gewijzigd,
+bl.datum_gewijzigd,
 
 bl.bouwlaag,
 
 bl.bouwdeel,
 
-o.object\_id,
+o.object_id,
 
 o.formelenaam,
 
@@ -394,15 +394,15 @@ o.status
 
 FROM objecten.bouwlagen bl
 
-JOIN objecten.object o on bl.object\_id = o.id
+JOIN objecten.object o on bl.object_id = o.id
 
-WHERE object.status::text = &#39;in gebruik&#39;::text AND o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL) AND (o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL;
+WHERE object.status::text = in gebruik::text AND o.datum_geldig_vanaf \&lt;= now() OR o.datum_geldig_vanaf IS NULL) AND (o.datum_geldig_tot  now() OR o.datum_geldig_tot IS NULL;
 ```
-Een repressief object heeft maar 1 actuele status, zolang datum\_geldig\_tot leeg is, is dit het juiste repressieve object.
+Een repressief object heeft maar 1 actuele status, zolang datum_geldig_tot leeg is, is dit het juiste repressieve object.
 
 Een terrein hoeft niet meer gerelateerd te worden aan het repressieve object of de historietabel omdat die al reeds (als die bestaat!) opgeslagen zit in objecten.object. Als een terrein niet bestaat dan is het pand het repressieve object in objecten.object.
 
-Een ruimtelijke selectie tussen bouwlaag en terrein+object is niet meer nodig omdat de relatie tussen object en terrein plat geslagen is en het object gekoppeld kan worden met de bouwlaag op basis van object\_id. objecten.bouwlagen object\_id = objecten.object id.
+Een ruimtelijke selectie tussen bouwlaag en terrein+object is niet meer nodig omdat de relatie tussen object en terrein plat geslagen is en het object gekoppeld kan worden met de bouwlaag op basis van object_id. objecten.bouwlagen object_id = objecten.object id.
 
 ## Uitvoering samenvoegen datamodellen tot LTR
 
@@ -435,7 +435,7 @@ Het is erg veel uitzoekwerk wat de wijzigingen zijn en het is niet duidelijk wel
   1. Aanpassing repressief object voor terreinen / bouwlagen(panden)
   2. Eenduidige werkwijze en opslag voor gevaarlijke stoffen
   3. Een aanpassing aan opslag status (historietabel)
-  4. TYPES worden vervangen met ```\*\_type``` tabellen
+  4. TYPES worden vervangen met ```\*_type``` tabellen
   5. SERIALS worden met IDENTITY columns vervangen
   6. Performance gaat enorm omhoog voor views en specifiek voor voertuig views.
 2. Het opzetten van een Github:
