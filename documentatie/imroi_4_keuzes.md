@@ -1,7 +1,7 @@
 # IMROI 4.0.0.
 ## samengevoegd datamodel (verstrekt op 20-10-2020)
 
-## 1. **Doel document**
+## Doel document
 
 **Inleiding**
 
@@ -9,7 +9,7 @@ Er zijn meerdere sessies geweest om keuzes te maken in de verschillen in registr
 
 Naast dat er twee modellen zijn, zijn er veel verschillende versies. Zo is op het moment van schrijven een veelvoud aan versies actief tussen (2.x.x.) 3.0.4. – 3.2.0. Een van de doelen is dan ook grip te krijgen op het datamodel IMROI. Het eigenaarschap en akkoord op wijzigingen komt vanuit de werkgroep IMROI en niet vanuit de individuen bij één van de Veiligheidsregio&#39;s.
 
-## 1. **Gevaarlijke stoffen**
+## Gevaarlijke stoffen
 
 **Verschillen**
 
@@ -99,7 +99,7 @@ Per gevaarlijke stof accepteren dat er een locatie aan hangt, er kan dan in de v
 
 Voor de gebruiker is het simpel en efficiënt want je kiest een symbool en klikt op de kaart. Je hebt dan meteen de juiste gegevens en gaat door met de volgende gevaarlijke stof (punt) als je er aan toe bent.
 
-## 1. **Repressief object (verschil in terreinen)**
+## Repressief object (verschil in terreinen)
 
 **Verschillen**
 
@@ -122,10 +122,8 @@ Nu blijkt niet elke regio de voorkeur te hebben om altijd een terrein te moeten 
 | **Scenario** | Pand (lees bouwlaag) | Terrein | Repressief objectObjecten.object | Geometrie pand in objecten.bouwlagen | Geometrie terrein in objecten.terreinen |
 | --- | --- | --- | --- | --- | --- |
 | ![](RackMultipart20201021-4-gki9kz_html_ce4f662b29c8ad4a.png) | Ja | Ja, genereer (trigger) | Geovlak terrein | X, y | X, y |
-| ![](RackMultipart20201021-4-gki9kz_html_f2d73f78a68d5efd.png) | Ja | Nee | Geovlak pand | X, y |
- |
-| ![](RackMultipart20201021-4-gki9kz_html_db8a0c7d564ce5b7.png) | Nee | Ja, teken | Geovlak terrein |
- | X, y |
+| ![](RackMultipart20201021-4-gki9kz_html_f2d73f78a68d5efd.png) | Ja | Nee | Geovlak pand | X, y | |
+| ![](RackMultipart20201021-4-gki9kz_html_db8a0c7d564ce5b7.png) | Nee | Ja, teken | Geovlak terrein | | X, y |
 | ![](RackMultipart20201021-4-gki9kz_html_bad71fcc56877ffa.png) | Ja, meerdere | Ja, teken | Geovlak terrein | X, y , x, y …. | X, y |
 
 **Aanbeveling**
@@ -262,15 +260,15 @@ o.datum\_geldig\_vanaf \&lt;= now() OR o.datum\_geldig\_vanaf IS NULL
 
 AND o.datum\_geldig\_tot \&gt; now() OR o.datum\_geldig\_tot IS NULL;
 ```
-1. **Historietabel**
+## Historietabel
 
 **Verschillen**
 
-**SafetyCT**
+**Veiligheidsregio's QGIS**
 
 Maakt gebruik van objecten.historie en matrixcode. Naast QGIS maakt ook voertuig (views) gebruik van het status veld in objecten.historie. Is een repressief object in concept dan wordt die niet weergegeven bijvoorbeeld.
 
-**Baas Geoinformatie**
+**Veiligheidsregio's COGO**
 
 COGO anders opgelost: regio tabel toegevoegd. Historietabel wordt niet gebruikt. COGO gebruikt objecten\_plus voor status.
 
@@ -308,7 +306,7 @@ Als laatste extra veld:
 
 Plus\_info (json)
 
-De reden van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix\_code, teamlid etc. Maar om SafetyCT wat tegemoet te komen om niet al te veel om te stekkeren de velden bewaard.
+De reden van dit veld is dat je extra informatie kwijt kan, eigenlijk zou dit ook gebruikt kunnen worden voor matrix\_code, teamlid etc. 
 
 Dit veld kan gebruikt worden voor bijvoorbeeld: privacy achtige zaken als: een toegangscode tot een repressief object, i.p.v. enkel de formelenaam een contactgegeven of welke informatie dan ook.
 
@@ -406,7 +404,7 @@ Een terrein hoeft niet meer gerelateerd te worden aan het repressieve object of 
 
 Een ruimtelijke selectie tussen bouwlaag en terrein+object is niet meer nodig omdat de relatie tussen object en terrein plat geslagen is en het object gekoppeld kan worden met de bouwlaag op basis van object\_id. objecten.bouwlagen object\_id = objecten.object id.
 
-1. **Uitvoering samenvoegen datamodellen tot LTR**
+## Uitvoering samenvoegen datamodellen tot LTR
 
 **Voorstel aan OIV IMROI werkgroep**
 
@@ -418,12 +416,12 @@ Het is erg veel uitzoekwerk wat de wijzigingen zijn en het is niet duidelijk wel
 
 **Een paar uitgangspunten:**
 
-1. **Het samengevoegde datamodel omarmen** , dit kost zowel Baas Geo-informatie als SafetyCT werk.
+1. **Het samengevoegde datamodel omarmen** , dit kost zowel COGO als de QGIS plug-in werk.
   1. De aanpassingen levert de werkgroep aan, men krijgt een kant en klaar leeg datamodel met een overzicht waarin de wijzingen zitten.
   2. Dit datamodel is een combinatie van: 3.0.4. en 3.2.0. (dit is eigenlijk niet het uitgangspunt, dit zou 3.0.4. zijn maar enige coulance is geboden richting 3.2.0.). Met cruciale keuzes voor terreinen, gevaarlijke stoffen en historie.
 2. **Het samengevoegde datamodel komt op Github** en wordt beheert door de werkgroep en niet door de externe ontwikkelaars. De werkgroep zet Github op.
-3. **Het samengevoegde datamodel is versie 4.0.0**. Dit model krijgt een inzageperiode van een paar weken, zowel Baas Geo-informatie als SafetyCT krijgt hierin inzage
-  1. Dit voorkomt dat er meerdere versies in het land actief zijn, als er een versie is voor bv. Friesland waarin her en der aanpassingen zijn in 3.0.4 – 3.2.0. dan is dat aan SafetyCT/Baas Geo-informatie om dat op te lossen. Het is geen doen om mutaties die dagelijks in het datamodel gemaakt worden bij te houden. Dit zal vanaf nu periodiek gaan vanuit de werkgroep.
+3. **Het samengevoegde datamodel is versie 4.0.0**. Dit model krijgt een inzageperiode van een paar weken, zowel COGO als QGIS plug-in bouwers krijgen hierin inzage
+  1. Dit voorkomt dat er meerdere versies in het land actief zijn, als er een versie is voor bv. Friesland waarin her en der aanpassingen zijn in 3.0.4 – 3.2.0. dan is dat aan de ontwikkelaars om dat op te lossen. Het is geen doen om mutaties die dagelijks in het datamodel gemaakt worden bij te houden. Dit zal vanaf nu periodiek gaan vanuit de werkgroep.
   2. We zijn als Veiligheidsregio eigenaar van het model, we accepteren dus alleen aanpassingen waarop akkoord wordt geven. Het akkoord vind plaats in overleg en wordt in Github doorgevoerd.
 4. **Duidelijke afspraken wat het datamodel is** :
   1. Views voor voertuigen, COGO, QGIS duidelijk scheiden van het datamodel. Niet elke regio heeft bijvoorbeeld (dezelfde) voertuig views nodig.
