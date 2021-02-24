@@ -1230,7 +1230,6 @@ CREATE TABLE objecten.object (
     typeobject character varying(50),
     matrix_code_id smallint NOT NULL,
     plus_info json,
-    geovlak public.geometry(MultiPolygon,28992),
     datum_geldig_tot timestamp without time zone,
     datum_geldig_vanaf timestamp without time zone,
     bron character varying(3) DEFAULT 'BAG'::character varying NOT NULL,
