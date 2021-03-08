@@ -2540,6 +2540,8 @@ COPY objecten.dreiging_type (id, naam, omschrijving) FROM stdin;
 128 Gassen onder druk - GHS \N
 129 Gevaar voor milieu - GHS    \N
 130 Gevaar gezondheid - GHS \N
+131 Omvormer \N
+132 Laadpaal \N
 \.
 
 
@@ -2710,15 +2712,10 @@ COPY objecten.ingang_type (id, naam) FROM stdin;
 8   Nooduitgang
 9   Toegang spoor
 10  Gedeelde neveningang
-11  Oud type
-12  Oud type2
-13  Oud type3
-14  Oud type4
-15  Oud type5
-16  Oud type6
-17  Oud type7
-18  Oud type8
-19  Oud type9
+11  Opening in hek
+12  Hoogtebeperking
+13  Slagboom
+14  Paaltje
 \.
 
 
